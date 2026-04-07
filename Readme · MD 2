@@ -1,0 +1,99 @@
+# 📈 TRADAMAR — Structure Scanner & Trading Signal Engine
+
+> **Algorithme de trading technique** basé sur la détection automatique de structures chartistes (triangles, canaux) sur n'importe quel actif financier.
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.32+-red?logo=streamlit)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+---
+
+## 🎯 Fonctionnalités
+
+| Feature | Description |
+|---|---|
+| 📊 **Détection de structures** | Triangles & canaux via régression linéaire sur pivots |
+| 🔴 **Modèle 1 — Breakout** | Signaux sur cassure de structure avec RR configurable |
+| 🟢 **Modèle 2 — Rebond** | Signaux de rebond internes (zones 15%/21%/78%) |
+| 📋 **Tableau des signaux** | Export CSV filtrable par modèle, direction, résultat |
+| 📈 **Courbe PnL** | Performance cumulée et stats par modèle |
+| ⚙️ **Sidebar paramétrable** | Tous les paramètres ajustables en temps réel |
+| 🔒 **Filtre 1 position** | Option pour n'avoir qu'un trade actif à la fois |
+
+---
+
+## 🚀 Installation
+
+```bash
+# 1. Cloner le repo
+git clone https://github.com/TON_USERNAME/tradamar.git
+cd tradamar
+
+# 2. Installer les dépendances
+pip install -r requirements.txt
+
+# 3. Lancer l'application
+streamlit run app.py
+```
+
+---
+
+## ☁️ Déploiement sur Streamlit Cloud
+
+1. Push le repo sur GitHub
+2. Va sur [share.streamlit.io](https://share.streamlit.io)
+3. Connecte ton repo GitHub
+4. Sélectionne `app.py` comme fichier principal
+5. **Deploy !**
+
+---
+
+## 📐 Architecture de l'algorithme
+
+```
+Données OHLCV (yfinance)
+        │
+        ▼
+Détection des pivots (scipy.argrelextrema)
+        │
+        ▼
+Détection de structures (régression linéaire)
+      ┌─┴─────────────────┐
+      ▼                   ▼
+Modèle 1 — Breakout   Modèle 2 — Rebond
+  (cassure structure)   (rebond interne)
+      │                   │
+      └────────┬──────────┘
+               ▼
+       Signaux (Entry / SL / TP)
+               │
+               ▼
+    Backtesting & Statistiques
+```
+
+---
+
+## ⚙️ Paramètres configurables
+
+| Paramètre | Défaut | Description |
+|---|---|---|
+| Window pivots | 10 | Sensibilité de détection des pivots |
+| Min points / structure | 3 | Nombre minimum de pivots pour valider une structure |
+| Tolérance cassure | 0.5% | Marge pour confirmer la cassure |
+| Risk/Reward ratio | 2.0 | Ratio risque/rendement cible |
+| Zone contact (M2) | 15% | % de H pour valider le contact |
+| Seuil entrée (M2) | 21% | % de H pour déclencher l'entrée |
+| Seuil TP (M2) | 78% | % de H pour placer le TP |
+| Filtre 1 position | ON | Bloque les nouveaux signaux si une position est active |
+
+---
+
+## ⚠️ Avertissement
+
+> Ce projet est à but **éducatif uniquement**. Il ne constitue pas un conseil financier. Le trading comporte des risques de perte en capital. Testez toujours sur un compte démo avant tout usage réel.
+
+---
+
+## 📄 Licence
+
+MIT License — Libre d'utilisation et de modification.
